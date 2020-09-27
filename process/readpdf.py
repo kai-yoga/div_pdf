@@ -112,6 +112,7 @@ def main():
         else:
             print('文件=',file,'不是pdf文件，忽略处理!')
     end=time.perf_counter()
+    print('拆分后的文件保存路径为：',savepath)
     print('处理完成，耗时=',str(end-start),'秒！')
 if __name__=='__main__':
     main()
