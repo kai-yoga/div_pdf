@@ -10,7 +10,6 @@ def get_dic(file_name):
     try:
         text=extract_text(file_name,password='Gzdx230!@#$')
         text=repr(text).replace('\n','').split('广州大学')
-
         for i in range(len(text)):
             if len(text[i])>5:
                 # print(i,text[i])
