@@ -68,7 +68,7 @@ def div_files(file_name,savepath,dic={}):
                 doc.write(f)
             f.close()
             L.append((xh,xm,nj,bj,
-                      "=hyperlink('"+os.path.join(create_file_save_path(savepath,k),save_file_name)+"')")
+                      '=hyperlink("'+os.path.join(create_file_save_path(savepath,k),save_file_name)+'")')
                      )
             # print((xh,xm,nj,bj,
             #           '=hyperlink('+os.path.join(create_file_save_path(savepath,k),save_file_name)+')'))
