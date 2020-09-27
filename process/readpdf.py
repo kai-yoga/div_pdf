@@ -12,12 +12,14 @@ def get_dic(file_name):
     for i in range(len(text)):
         if len(text[i])>5:
             # print(i,text[i])
-            xh=text[i].split('学号')[-1].split('姓名')[0].replace(' ','').replace('\\n','')
-            xm=text[i].split('姓名')[-1].split('年级')[0].replace(' ','').replace('\\n','')
-            nj=text[i].split('年级')[-1].split('班级')[0].replace(' ','').replace('\\n','')
-            bj=text[i].split('班级')[-1].split('\\n')[2].replace(' ','').replace('\\n','')
-            lsh=text[i].split('打印流水号:')[-1].split('\\n')[0]
-            # print(xh,xm,nj,bj,lsh)
+            xh=text[i].split('学 号')[-1].split('姓 名')[0].replace(' ','').replace('\\n','')
+            xm=text[i].split('姓 名')[-1].split('年 级')[0].replace(' ','').replace('\\n','')
+            nj=text[i].split('年 级')[-1].split('班 级')[0].replace(' ','').replace('\\n','')
+            bj=text[i].split('班 级')[-1].split('\\n')[2].replace(' ','').replace('\\n','')
+            lsh=text[i].split('打印流水号:')[-1].split('#')[0]
+            if bj=='性质':
+                print(text[i])
+                # print(xh,xm,nj,bj,lsh)
             L.append(xh+'#'+xm+'#'+nj+'#'+bj+'#'+lsh)
     for index in range(len(L)):
         if L[index] not in dic.keys():
@@ -44,7 +46,7 @@ def create_file_save_path(savepath='',k=''):
 def div_files(file_name,savepath,dic={}):
     '''按页码范围拆分文件'''
     pdf=PdfFileReader(open(file_name,'rb'))
-    L=[]
+    L=[('学号','姓名','年级','班级','文件位置')]
     if pdf.decrypt('Gzdx230!@#$'):
         # L=[]
         ########################拆分、加密文档
@@ -86,8 +88,10 @@ def create_xlsx_list(L,file_name=''):
     return 1
 
 def get_input():
-    print('请输入需要拆分的pdf文件路径（包含文件名）\n如不输入，则需确保需要拆分的pdf文件与当前exe文件在同一文件夹下：\n')
+    print('*'*30)
+    print('请输入需要拆分的pdf文件夹路径\n如不输入，则需确保需要拆分的pdf文件与当前exe文件在同一文件夹下：\n输入后请按回车键：')
     path=input()
+    # print('接收输入完成，请按回车键！')
     return path if len(path)>0 else os.getcwd()
 
 def main():
@@ -95,6 +99,8 @@ def main():
     savepath=os.path.join(os.getcwd(),'拆分后')
     sourpath=get_input()
     # sourpath=r"C:\Users\kai-y\Desktop\新建文件夹"
+    print('程序已启动，请等待！')
+    start=time.perf_counter()
     for file in os.listdir(sourpath):
         if file.lower().endswith('.pdf'):
             file_name=os.path.join(sourpath,file)
@@ -105,6 +111,7 @@ def main():
             time.sleep(10)
         else:
             print('文件=',file,'不是pdf文件，忽略处理!')
-
+    end=time.perf_counter()
+    print('处理完成，耗时=',str(end-start),'秒！')
 if __name__=='__main__':
     main()
